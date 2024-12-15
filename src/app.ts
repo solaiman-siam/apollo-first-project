@@ -2,6 +2,8 @@ import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import { StudentRoute } from './app/modules/student/student.route';
 import { UserRoutes } from './app/modules/user/user.route';
+import globarError from './app/middleware/globalerror';
+import notFound from './app/middleware/notFound';
 const app: Application = express();
 
 // parser
@@ -20,17 +22,6 @@ app.get('/', (req: Request, res: Response) => {
 
 
 
-app.use((err: any, req: Request, res: Response , next: NextFunction) => {
-  const status = 500
-  const message =  err.message
-
-  res.status(status).json({
-    success: false,
-    message: message,
-    error: err
-  })
-
-
-
-})
+app.use(globarError)
+app.use(notFound)
 export default app;
