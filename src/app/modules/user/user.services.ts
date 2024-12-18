@@ -20,7 +20,7 @@ const createStudentIntoDB = async(password : string, studentData: TStudent) => {
 
 
     // create a student
-    if(Object.keys(newUser).length > 0) {
+    if(Object.keys(newUser).length) {
         console.log(newUser);
         console.log(userData);
         studentData.id = newUser.id 
