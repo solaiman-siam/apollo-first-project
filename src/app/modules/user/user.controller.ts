@@ -9,7 +9,7 @@ const createStudent = catchAsync(async (req, res) => {
   // will call services
   const result = await userService.createStudentIntoDB(password, studentData);
 
-  // send respon0se
+  // send responose
   res.status(200).json({
     success: true,
     message: 'Student Created Successfully',

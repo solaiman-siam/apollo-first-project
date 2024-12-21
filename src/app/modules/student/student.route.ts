@@ -5,4 +5,4 @@ const router = express.Router()
 router.get('/', studentControllers.getStudent)
 router.get('/:studentId', studentControllers.getSingleStudent)
 
-export const StudentRoute = router
+export const StudentRoute = router 

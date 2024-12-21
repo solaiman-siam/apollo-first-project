@@ -20,18 +20,14 @@ const createStudentIntoDB = async(password : string, studentData: TStudent) => {
 
 
     // create a student
-    if(Object.keys(newUser).length) {
-        console.log(newUser);
-        console.log(userData);
+    if(Object.keys(newUser).length > 0) {
+   
         studentData.id = newUser.id 
         studentData.user = newUser._id // ref id
 
-        console.log('student data',studentData);
         const newStudent = await Student.create(studentData)
-        console.log('newStudent', newStudent);
         return newStudent
     }
-    
 }
 
 export const userService = {

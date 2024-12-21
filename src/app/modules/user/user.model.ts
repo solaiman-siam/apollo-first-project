@@ -1,7 +1,8 @@
 import { model, Schema } from 'mongoose';
 import { TUser } from './user.interface';
-import bcrypt from 'bcrypt'
+import bcrypt, { hash } from 'bcrypt'
 import config from '../../config';
+
 const userSchema = new Schema<TUser>(
   {
     id: {
@@ -36,12 +37,30 @@ const userSchema = new Schema<TUser>(
 );
 
 
+// userSchema.pre('save', async function (next) {
+//   const user = this;
 
-userSchema.pre('save', async function (next) {
-  const user = this
-  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds),);
+//   if (user.isModified('password')) { // Hash the password only if it has been modified
+//       try {
+//           user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds));
+//       } catch (err) {
+//           return next(err); // Pass any error to the next middleware
+//       }
+//   }
+
+//   next();
+// });
+
+
+
+// post save middleware
+userSchema.post('save', function (doc, next) {
+  doc.password = '';
   next()
 })
+
+
+
 
 
 export const User = model<TUser>('User', userSchema);

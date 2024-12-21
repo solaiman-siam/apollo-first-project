@@ -1,8 +1,6 @@
 import { Schema, model, connect } from 'mongoose';
 import { TGuardian, TLocalGuardian, TStudent, TUserName, StudentModel } from './student.interface';
 import validator from 'validator';
-import bcrypt from 'bcrypt'
-import config from '../../config';
 
 const userSchema = new Schema<TUserName>({
     firstName: {type: String, required: [true, 'firstName is required']},
@@ -46,11 +44,11 @@ const studentSchema = new Schema<TStudent , StudentModel>({
         type: String,
         enum: {
             values: ['male', 'female'],
-            message: `{VALUE} Gender value is required and it will be these two types value male, female`
+            message: '{VALUE} is not a valid gender. Allowed values are male and female.',
         },
         required: true
     },
-    dateOfBirth: {type: String},
+    dateOfBirth: {type: Date},
     contactNo: {type: String, required: true},
     emmergencyContactNo: {type: String, required: true},
     bloodGroup: {
@@ -71,20 +69,21 @@ const studentSchema = new Schema<TStudent , StudentModel>({
 })
 
 
-studentSchema.statics.isUserExists = async function (id: string) {
-    const existingUser = await Student.findOne({id})
+// studentSchema.statics.isUserExists = async function (id: string) {
+//     const existingUser = await Student.findOne({id})
     
-}
+// }
 
-studentSchema.pre('save', async function (next) {
-    const user = this
-    user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds),);
-    next()
-})
-
-// studentSchema.post('save', function () {
-//     console.log( this, 'we saved the data');
+// studentSchema.pre('save', async function (next) {
+//     const user = this
+//     console.log( 'user', user);
+//     user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds));
+//     next()
 // })
+
+studentSchema.post('save', function () {
+    
+})
 
 // studentSchema.methods.isUserExists = async function (id: string) {
 //     const existingUser = await Student.findOne({id})

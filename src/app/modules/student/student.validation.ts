@@ -23,7 +23,7 @@ const localGuardianValidationSchema = z.object({
   contactInfo: z.string().nonempty('contactInfo is required'),
 });
 
-export const studentValidationSchema = z.object({
+export const createStudentValidationSchema = z.object({
   body: z.object({
     password: z.string(),
     student: z.object({
@@ -35,7 +35,7 @@ export const studentValidationSchema = z.object({
       gender: z.enum(['male', 'female', 'other'], {
         errorMap: () => ({ message: 'Gender value must be male or female' }),
       }),
-      dateOfBirth: z.string().optional(),
+      dateOfBirth: z.date().optional(),
       contactNo: z.string().nonempty('contactNo is required'),
       emmergencyContactNo: z
         .string()
@@ -49,3 +49,7 @@ export const studentValidationSchema = z.object({
   }),
 });
 
+
+export const studentValidation =  {
+  createStudentValidationSchema
+}

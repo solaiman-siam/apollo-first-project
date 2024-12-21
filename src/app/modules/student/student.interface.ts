@@ -11,7 +11,7 @@ export type TGuardian = {
 export type TUserName = {
   firstName: string;
   middleName?: string;
-  lastName: string;
+  lastName: string; 
 };
 
 type BloodGroup = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
@@ -29,7 +29,7 @@ export type TStudent = {
   name: TUserName;
   email: string;
   gender: string;
-  dateOfBirth?: string;
+  dateOfBirth?: Date;
   contactNo: string;
   emmergencyContactNo: string;
   bloodGroup?: BloodGroup;
