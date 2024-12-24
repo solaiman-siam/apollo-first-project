@@ -57,6 +57,10 @@ const studentSchema = new Schema<TStudent , StudentModel>({
     },
     presentAddress: {type: String, required: true},
     parmanentAddress: {type: String, required: true},
+    addmissionSemister: {
+        type: Schema.Types.ObjectId,
+        ref: 'AcademicSemister'
+    },
     gardian: {
         type: guardianSchema,
         required: true

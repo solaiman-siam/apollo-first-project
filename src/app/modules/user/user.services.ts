@@ -1,10 +1,13 @@
 import config from "../../config"
+import { TAcademicSemister } from "../academicSemister/academicSemister.interface"
+import { AcademicSemister } from "../academicSemister/academicSemister.model"
 import { TStudent } from "../student/student.interface"
 import { Student } from "../student/student.model"
 import { TUser } from "./user.interface"
 import { User } from "./user.model"
+import { generateStudentId } from "./user.utils"
 
-const createStudentIntoDB = async(password : string, studentData: TStudent) => {
+const createStudentIntoDB = async (password : string, studentData: TStudent) => {
 
     const userData: Partial<TUser> = {}
 
@@ -13,7 +16,13 @@ const createStudentIntoDB = async(password : string, studentData: TStudent) => {
 
     // set student role
     userData.role = 'student'
-    userData.id = '2041304102'
+
+
+    const academicSemister = await AcademicSemister.findById(studentData.addmissionSemister)
+
+
+    // set generated id
+    userData.id = await generateStudentId(academicSemister)
 
     // create a user
     const newUser = await User.create(userData)

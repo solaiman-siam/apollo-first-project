@@ -1,8 +1,5 @@
 import { z } from "zod";
 import { AcademicSemisterName, AcademisterSemisterCode, Months } from "./academicSemister.constant";
-import { TAcademicSemisterName } from "./academicSemister.interface";
-
-
 
 
 const createAcademicSemisterValidationSchema = z.object({
@@ -14,9 +11,19 @@ const createAcademicSemisterValidationSchema = z.object({
         endMonth: z.enum([...Months] as [string, ...string[]])
     })
 })
+const updateAcademicSemisterValidationSchema = z.object({
+    body: z.object( {
+        name: z.enum([...AcademicSemisterName] as [string, ...string[]]).optional(),
+        year: z.string().optional(),
+        code: z.enum([...AcademisterSemisterCode] as [string, ...string[]]).optional(),
+        startMonth: z.enum([...Months] as [string, ...string[]]).optional(),
+        endMonth: z.enum([...Months] as [string, ...string[]]).optional()
+    })
+})
 
 
 
 export const AcademicSemisterValidations = {
-    createAcademicSemisterValidationSchema
+    createAcademicSemisterValidationSchema,
+    updateAcademicSemisterValidationSchema
 }

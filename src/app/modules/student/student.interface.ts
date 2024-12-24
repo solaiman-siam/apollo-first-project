@@ -35,6 +35,7 @@ export type TStudent = {
   bloodGroup?: BloodGroup;
   presentAddress: string;
   parmanentAddress: string;
+  addmissionSemister: Types.ObjectId;
   gardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImage? : string;
