@@ -1,8 +1,10 @@
 
 import express from 'express'
-import { AcademicSemisterController } from './academicSemister.controller';
+
 import { validateRequest } from '../../middleware/validateRequest';
+import { AcademicSemisterController } from './academicSemister.controller';
 import { AcademicSemisterValidations } from './academicSemister.validation';
+
 
 const router = express.Router()
 

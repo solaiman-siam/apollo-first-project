@@ -35,7 +35,7 @@ const getSingleAcademicFacultyAndUpdate = async ( payload: Partial<TAcademicFacu
 
 
 
-export const academicFacultyServices = {
+export const AcademicFacultyServices = {
     createAcademicFacultyIntoDB,
     getAllAcademicFaculty,
     getSingleAcademicFaculty,
