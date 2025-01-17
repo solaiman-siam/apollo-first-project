@@ -45,12 +45,40 @@ export const createStudentValidationSchema = z.object({
       parmanentAddress: z.string().nonempty('parmanentAddress is required'),
       gardian: guardianValidationSchema,
       addmissionSemister: z.string(),
+      academicDepartment: z.string(),
       localGuardian: localGuardianValidationSchema,
     }),
   }),
 });
 
+const updateStudentValidationSchema = z.object({
+  body: z.object({
+    student: z.object({
+      name: userNameValidationSchema.partial(),
+      email: z
+        .string()
+        .email('{VALUE} is not a valid email')
+        .optional(),
+      gender: z.enum(['male', 'female', 'other'], {
+        errorMap: () => ({ message: 'Gender value must be male or female' }),
+      }).optional(),
+      dateOfBirth: z.string().optional(),
+      contactNo: z.string().optional(),
+      emmergencyContactNo: z.string().optional(),
+      bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']).optional(),
+      presentAddress: z.string().optional(),
+      parmanentAddress: z.string().optional(),
+      gardian: guardianValidationSchema.partial(),
+      addmissionSemister: z.string().optional(),
+      academicDepartment: z.string().optional(),
+      localGuardian: localGuardianValidationSchema.partial(),
+    }).partial(), // Makes all fields in student optional
+  }).partial(), // Makes body fields optional
+});
+
+
 
 export const studentValidation =  {
-  createStudentValidationSchema
+  createStudentValidationSchema,
+  updateStudentValidationSchema
 }

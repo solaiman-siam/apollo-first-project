@@ -34,8 +34,10 @@ export type TStudent = {
   emmergencyContactNo: string;
   bloodGroup?: BloodGroup;
   presentAddress: string;
+  isDeleted: boolean;
   parmanentAddress: string;
   addmissionSemister: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
   gardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImage? : string;
