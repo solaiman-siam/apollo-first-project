@@ -2,6 +2,8 @@ import { ErrorRequestHandler, NextFunction, Request, Response } from "express"
 import { ZodError, ZodIssue } from "zod"
 import { TErrorSources } from "../interface/error"
 import config from "../config"
+import { zodErrorHandler } from "../errors/handleZodError"
+import { mongooseErrorHandler } from "../errors/handleValidationError"
 
 
 const globarError : ErrorRequestHandler = (err, req, res, next) => {
@@ -18,25 +20,7 @@ const globarError : ErrorRequestHandler = (err, req, res, next) => {
     }]
 
 
-    const zodErrorHandler = (err: ZodError) => {
 
-      const status = 400
-
-      const errorSources : TErrorSources = err.issues.map((issue : ZodIssue) => { 
-        return { 
-        path: issue?.path[issue.path.length - 1],
-        message: issue?.message
-      } 
-    })
-
-
-      return {
-        statusCode,
-        message: 'Zod Validation Error',
-        errorSources,
-
-      }
-    }
 
     
 
@@ -45,13 +29,17 @@ const globarError : ErrorRequestHandler = (err, req, res, next) => {
       statusCode = simplifiedError?.statusCode,
       message = simplifiedError?.message,
       errorSources = simplifiedError?.errorSources
+    }else if(err?.name === 'ValidationError') {
+      const simplifiedError = mongooseErrorHandler(err)
+      statusCode = simplifiedError?.statusCode
+      message = simplifiedError?.message
+      errorSources = simplifiedError?.errorSources
     }
 
   
     res.status(statusCode).json({
       success,
       message,
-      err,
       errorSources,
       stack: config.NODE_ENV === 'development' ?  err?.stack : null
       
