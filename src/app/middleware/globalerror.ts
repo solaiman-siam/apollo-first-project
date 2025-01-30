@@ -51,6 +51,7 @@ const globarError : ErrorRequestHandler = (err, req, res, next) => {
     res.status(statusCode).json({
       success,
       message,
+      err,
       errorSources,
       stack: config.NODE_ENV === 'development' ?  err?.stack : null
       
