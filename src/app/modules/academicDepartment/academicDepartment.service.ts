@@ -7,11 +7,11 @@ import { AcademicDepartment } from "./academicDepartment.model";
 const createAcademicDepartmentFromDb = async (payload : TAcademicDepartment) => {
 
 
-    const isDepartmentExist = await AcademicDepartment.findOne({ name: payload.name});
+    // const isDepartmentExist = await AcademicDepartment.findOne({ name: payload.name});
 
-    if(isDepartmentExist) {
-        throw new Error('Department is already exist')
-    }
+    // if(isDepartmentExist) {
+    //     throw new Error('Department is already exist')
+    // }
 
     const result = await AcademicDepartment.create(payload);
     return result;

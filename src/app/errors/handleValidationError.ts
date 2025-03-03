@@ -1,7 +1,10 @@
 import mongoose from 'mongoose';
-import { TErrorSources } from '../interface/error';
+import { TErrorReturn, TErrorSources } from '../interface/error';
 
-export const mongooseErrorHandler = (err: mongoose.Error.ValidationError) => {
+
+
+
+export const mongooseErrorHandler = (err: mongoose.Error.ValidationError) : TErrorReturn => {
   const errorSources: TErrorSources = Object.values(err?.errors).map((val) => {
     return {
       path: val?.path,
@@ -10,7 +13,7 @@ export const mongooseErrorHandler = (err: mongoose.Error.ValidationError) => {
   });
 
   const statusCode = 400;
-
+  const heYou = 'lkasdf'
   return {
     statusCode,
     message: 'Mongoose Validation Error',

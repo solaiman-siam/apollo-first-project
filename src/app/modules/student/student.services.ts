@@ -2,12 +2,83 @@ import { Student } from "./student.model";
 import { TStudent } from "./student.interface";
 import mongoose from "mongoose";
 import { User } from "../user/user.model";
+import QueryBuilder from "../../builder/QueryBuilder";
+import { searchableFields } from "./student.constant";
 
 
 
-const getStudentsFromDB = async () => {
-    const res = await Student.find().populate({ path: 'academicDepartment', populate: {path: 'academicFaculty'}}).populate('addmissionSemister')
-    return res
+const getStudentsFromDB = async (query : Record<string, unknown>) => {
+
+    // console.log('filed', query);
+
+
+
+    // let searchTerm  = '' 
+
+    // if(query?.searchTerm) {
+    //     searchTerm = query.searchTerm  as string    
+    // }
+
+    // const excludeFields = ['searchTerm', "sort", "limit", "page", 'fields']
+
+    // const mutateQuery = {...query}
+
+    // excludeFields.forEach(el => delete mutateQuery[el])
+
+    // const searchQuery = Student.find({
+    //     $or: ['name.firstName', 'presentAddress', 'email'].map((field) => ({
+    //         [field] : {$regex: searchTerm, $options: 'i'}
+    //     }))
+    // })
+
+    // const filterQuery = searchQuery.find(mutateQuery).populate({ path: 'academicDepartment', populate: {path: 'academicFaculty'}}).populate('addmissionSemister')
+
+    // let sort = '-createdAt'
+
+    // if(query.sort) {
+    //     sort = query.sort as string
+    // }
+
+    // const sortQuery = filterQuery.sort(sort)
+
+
+    // let limit = 10
+    // let page = 1
+    // let skip = 0
+
+    // if(query.page) {
+    //     page = Number(query.page)
+    // }
+
+    // if(query.limit) {
+    //     limit = Number(query.limit) 
+    //     skip = (page - 1) * limit
+    // }
+
+    // let fields = '__v'
+
+    // if(query.fields){
+    //     fields = (query.fields as string).split(',').join(' ')
+    // }
+
+
+    // const paginateQuery = sortQuery.skip(skip)
+
+    // const limitQuery =  paginateQuery.limit(limit)
+
+
+    // const fieldsQuery = await limitQuery.select(fields)
+
+    // return fieldsQuery
+
+    const studentQuery = new QueryBuilder(Student.find().populate({ path: 'academicDepartment', populate: {path: 'academicFaculty'}}).populate('addmissionSemister'), query).search(searchableFields).filter().sort().paginate().fields()
+
+    const result = await studentQuery.modelQuery
+
+    return result
+
+
+
 }
 
 const getSingleStudent =  async (studentId: string) => {
